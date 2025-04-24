@@ -1,0 +1,42 @@
+{% extends 'pizza/base.html' %}
+{% block 'body' %}
+{% load widget_tweaks %}
+<div class="container">
+<h2 xmlns="http://www.w3.org/1999/html">Order Pizza</h2>
+<h3>{{ note }}</h3>
+    {% if created_pizza_pk %}
+    <a href="{% url 'edit' created_pizza_pk %}">Edit Order</a>
+    {% endif %}
+    <form action="{% url 'order' %}" method="post">
+    {% csrf_token %}
+    {% for field in  pizzaform %}
+    <div class="form-group">
+    {{ field.errors }}
+    {{ field.label_tag }}
+    {% render_field field class="form-control" %}
+    </div>
+    {% endfor %}
+        <br><br>
+        <input type="submit" value="Order Pizza">
+</form>
+<br><br>
+Want more than one pizza?
+<form action="{%url 'pizzas' %}" method="GET">
+    {{ multiple_pizza_form }}
+    <br><br>
+    <input type="submit" value="Order Pizzas">
+</form>
+     {% endblock %}
+</div>
+
+        <!--<label for="topping1">Topping1</label>
+    <input id="topping1" type="text" name="topping1">
+    <label for="topping2">Topping2</label>
+    <input id="topping2" type="text" name="topping2">
+    <label for="size">Size</label>
+    <select id="size" name="size">
+        <option value="small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+    </select>
+    -->
